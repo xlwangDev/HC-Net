@@ -92,7 +92,8 @@ def KittiBEV():
         gr.Markdown("## Image Examples")
         gr.Examples(
             examples=[['./figure/exp1.jpg', 27, 7, 6, 1000],
-                      ['./figure/exp2.png', 17.5, 0.8, 4, 1000]],
+                      ['./figure/exp2.png', 17.5, 0.8, 4, 1000],
+                      ['./figure/exp3.jepg', 48, 11.5, 7, 1000]],
             inputs= [front_img, fov, pitch, scale, out_size],
             outputs=[BEV_output],
             fn=get_BEV_kitti,

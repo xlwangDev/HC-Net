@@ -23,6 +23,7 @@ We introduce a novel approach to fine-grained cross-view geo-localization. Our m
 
 ## 🔥 News
 
+- [2023-09] HC-Net has been accepted by NeurIPS 2023! 🔥🔥🔥
 - [2023-08] We release the [paper](https://arxiv.org/abs/2308.16906) of HC-Net and an online gradio [demo](http://101.230.144.196:7860).
 
 ## 🤖 Online Demo
@@ -99,3 +100,7 @@ If you find our work helpful, please cite:
       year={2023}
 }
 ```
+
+## 👏 Acknowledgements
+
+- This work is mainly based on [IHN](https://github.com/imdumpl78/IHN) and [RAFT](https://github.com/princeton-vl/RAFT), we thank the authors for the contribution.
