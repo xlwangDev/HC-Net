@@ -23,8 +23,9 @@ We introduce a novel approach to fine-grained cross-view geo-localization. Our m
 
 ## 🔥 News
 
-- [2023-09] HC-Net has been accepted by NeurIPS 2023! 🔥🔥🔥
-- [2023-08] We release the [paper](https://arxiv.org/abs/2308.16906) of HC-Net and an online gradio [demo](http://101.230.144.196:7860).
+- [2023-10-01] We release the code for implementing the spherical transform. For usage instructions, please refer to [Spherical_transform.ipynb](https://github.com/xlwangDev/HC-Net/blob/main/Spherical_transform.ipynb).
+- [2023-09-21] HC-Net has been accepted by NeurIPS 2023! 🔥🔥🔥
+- [2023-08-30] We release the [paper](https://arxiv.org/abs/2308.16906) of HC-Net and an online gradio [demo](http://101.230.144.196:7860).
 
 ## 🤖 Online Demo
 
