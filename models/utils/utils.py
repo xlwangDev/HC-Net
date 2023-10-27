@@ -8,12 +8,10 @@ import random
 import sys
 import cv2
 import matplotlib.pyplot as plt 
-import torchgeometry as tgm
+from .torch_geometry import get_perspective_transform
 # from pytorch3d.transforms import euler_angles_to_matrix
 from models.utils.torch_geometry import euler_angles_to_matrix, get_perspective_transform
 
-from scipy.spatial.transform import Rotation
-from sklearn.decomposition import PCA
 import time
 import math
 
@@ -53,27 +51,6 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     distance = c * r
 
     return distance
-
-def get_feature_show(feature_map):
-    # Load the feature map, inputs.shape = [batch, channel, H, W]
-    feature_map = feature_map.squeeze(0).permute(1, 2, 0)
-    feature_map = feature_map.cpu().detach().numpy()
-
-    # Flatten the feature map into a one-dimensional array
-    feature_vector = feature_map.reshape(-1, feature_map.shape[-1])
-
-    # Create a PCA (Principal Component Analysis) object and set the desired reduced dimensionality
-    pca = PCA(n_components=3)
-
-    # Reduce the dimensionality of the feature vectors
-    feature_reduced = pca.fit_transform(feature_vector)
-
-    # Reshape the dimension-reduced feature vectors back to the shape of the feature map
-    feature_reduced = feature_reduced.reshape(feature_map.shape[:-1] + (3,))
-
-    # Clip pixel values to be between 0 and 1
-    feature_reduced = np.clip(feature_reduced, 0, 1)
-    return feature_reduced
 
 def get_BEV_projection(img, Ho, Wo, Fov=170, dty=-20, dx=0, dy=0, device = 'cpu'):
     # device = 'cuda' if torch.cuda.is_available() else 'cpu'

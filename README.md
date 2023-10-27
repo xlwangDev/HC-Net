@@ -23,7 +23,8 @@ We introduce a novel approach to fine-grained cross-view geo-localization. Our m
 
 ## 🔥 News
 
-- [2023-10-01] We release the code for implementing the spherical transform. For usage instructions, please refer to [Spherical_transform.ipynb](https://github.com/xlwangDev/HC-Net/blob/main/Spherical_transform.ipynb).
+- [2023-10-27] We release the inferencing codes with [checkpoints](https://drive.google.com/drive/folders/1EL6RISnR5lOgz0WtWUYtFhKGcU_nROX9?usp=sharing) as well as the [demo script](https://github.com/xlwangDev/HC-Net/blob/main/demo_gradio.py). You can test HC-Net with your own machines.
+- [2023-10-01] We release the code for implementing the spherical transform. For usage instructions, please refer to [Spherical_transform.ipynb](https://github.com/xlwangDev/HC-Net/blob/main/demo/Spherical_transform.ipynb).
 - [2023-09-21] HC-Net has been accepted by NeurIPS 2023! 🔥🔥🔥
 - [2023-08-30] We release the [paper](https://arxiv.org/abs/2308.16906) of HC-Net and an online gradio [demo](http://101.230.144.196:7860).
 
@@ -35,11 +36,62 @@ You can test our model using the data from the **'same_area_balanced_test.txt'**
 
 <img src="./figure/Demo.png" alt="image-20230831204530724" style="zoom: 80%;" />
 
+## 📦 Inferencing
+
+### Installation
+
+We test our codes under the following environment:
+
+- Ubuntu 18.04
+- CUDA 12.0
+- Python 3.8.16
+- PyTorch 1.13.0
+
+To get started, follow these steps: 
+
+1. Clone this repository.
+
+```bash
+git clone https://github.com/xlwangDev/HC-Net.git
+cd HC-Net
+```
+
+2. Install the required packages.
+
+```bash
+conda create -n hcnet python=3.8 -y
+conda activate hcnet
+pip install -r requirements.txt
+```
+
+### Evaluation
+
+To evaluate the HC-Net model, follow these steps:
+
+1. Download the [VIGOR](https://github.com/Jeff-Zilence/VIGOR) dataset and set its path to '/home/< usr >/Data/VIGOR'.
+2. Download the [pretrained models](https://drive.google.com/drive/folders/1EL6RISnR5lOgz0WtWUYtFhKGcU_nROX9?usp=sharing) and place them in the './checkpoints/VIGOR '.
+3. Run the following command:
+
+````bash
+chmod +x val.sh
+# Usage: val.sh [same|cross]
+# For same-area in VIGOR
+./val.sh same 0
+# For cross-area in VIGOR
+./val.sh cross 0
+````
+
+4. You can also observe the visualization results of the model through a demo based on gradio. Use the following command to start the demo, and open the local URL: [http://0.0.0.0:7860](http://0.0.0.0:7860/).
+
+```bash
+python demo_gradio.py
+```
+
 ## 🏷️ Label Correction for [VIGOR](https://github.com/Jeff-Zilence/VIGOR) Dataset
 
 <img src="./figure/VIGOR_label.png" alt="image-20230831204530724" style="zoom: 60%;" />
 
-We propose the use of [Mercator projection](https://en.wikipedia.org/wiki/Web_Mercator_projection#References) to directly compute the pixel coordinates of ground images on specified satellite images using the GPS information provided in the dataset.
+We propose the use of [Mercator projection](https://en.wikipedia.org/wiki/Web_Mercator_projection#References) to directly compute the pixel coordinates of ground images on specified satellite images using the GPS information provided in the dataset. You can find the specific code at [Mercator.py](https://github.com/xlwangDev/HC-Net/blob/main/models/utils/Mercator.py).
 
 To use our corrected label, you can add the following content to the `__getitem__` method of the `VIGORDataset` class in `datasets.py` file in the [CCVPE](https://github.com/tudelft-iv/CCVPE) project:
 
@@ -84,9 +136,9 @@ Our projection process is implemented entirely in PyTorch, which means **our pro
 
 ## 📝 TODO List
 
-- [ ] Add data preparation codes.
-- [ ] Add inferencing and serving codes with checkpoints.
-- [ ] Add evaluation codes.
+- [x] Add data preparation codes.
+- [x] Add inferencing and serving codes with checkpoints.
+- [x] Add evaluation codes.
 - [ ] Add training codes.
 
 ## 🔗 Citation

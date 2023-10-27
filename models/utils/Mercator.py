@@ -1,10 +1,5 @@
-import cv2
-import os
-import requests
 import numpy as np
 import os.path
-from tqdm import tqdm
-from datetime import datetime
 import torch
 import math
 
