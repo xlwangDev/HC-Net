@@ -148,7 +148,7 @@ Our projection process is implemented entirely in PyTorch, which means **our pro
 - [x] Add data preparation codes.
 - [x] Add inferencing and serving codes with checkpoints.
 - [x] Add evaluation codes.
-- [x ] Add training codes.
+- [x] Add training codes.
 
 ## 🔗 Citation
 
