@@ -23,6 +23,7 @@ We introduce a novel approach to fine-grained cross-view geo-localization. Our m
 
 ## 🔥 News
 
+- [2024-04-27] We release the training codes for the VIGOR dataset. 
 - [2023-10-27] We release the inferencing codes with [checkpoints](https://drive.google.com/drive/folders/1EL6RISnR5lOgz0WtWUYtFhKGcU_nROX9?usp=sharing) as well as the [demo script](https://github.com/xlwangDev/HC-Net/blob/main/demo_gradio.py). You can test HC-Net with your own machines.
 - [2023-10-01] We release the code for implementing the spherical transform. For usage instructions, please refer to [Spherical_transform.ipynb](https://github.com/xlwangDev/HC-Net/blob/main/demo/Spherical_transform.ipynb).
 - [2023-09-21] HC-Net has been accepted by NeurIPS 2023! 🔥🔥🔥
@@ -30,17 +31,19 @@ We introduce a novel approach to fine-grained cross-view geo-localization. Our m
 
 ## 🤖 Online Demo
 
-**HC-Net is online! Try it at [this url](http://101.230.144.196:7860/).**
+~~**HC-Net is online! Try it at [this url](http://101.230.144.196:7860/).**~~
+
+**Please use the [demo script](https://github.com/xlwangDev/HC-Net/blob/main/demo_gradio.py) to deploy the demo locally for testing.**
 
 You can test our model using the data from the **'same_area_balanced_test.txt'** split of the [VIGOR](https://github.com/Jeff-Zilence/VIGOR) dataset, or by providing your own Panorama image along with its corresponding Satellite image.
 
 <img src="./figure/Demo.png" alt="image-20230831204530724" style="zoom: 80%;" />
 
-## 📦 Inferencing
+## 📦 Training and Evaluation
 
 ### Installation
 
-We test our codes under the following environment:
+We train and test our codes under the following environment:
 
 - Ubuntu 18.04
 - CUDA 12.0
@@ -62,6 +65,12 @@ cd HC-Net
 conda create -n hcnet python=3.8 -y
 conda activate hcnet
 pip install -r requirements.txt
+```
+
+### Training
+
+```bash
+sh train.sh
 ```
 
 ### Evaluation
@@ -139,18 +148,19 @@ Our projection process is implemented entirely in PyTorch, which means **our pro
 - [x] Add data preparation codes.
 - [x] Add inferencing and serving codes with checkpoints.
 - [x] Add evaluation codes.
-- [ ] Add training codes.
+- [x ] Add training codes.
 
 ## 🔗 Citation
 
 If you find our work helpful, please cite:
 
 ```bibtex
-@article{wang2023finegrained,
-      title={Fine-Grained Cross-View Geo-Localization Using a Correlation-Aware Homography Estimator}, 
-      author={Xiaolong Wang and Runsen Xu and Zuofan Cui and Zeyu Wan and Yu Zhang},
-      journal={arXiv preprint arXiv:2308.16906},
-      year={2023}
+@article{wang2024fine,
+  title={Fine-Grained Cross-View Geo-Localization Using a Correlation-Aware Homography Estimator},
+  author={Wang, Xiaolong and Xu, Runsen and Cui, Zhuofan and Wan, Zeyu and Zhang, Yu},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
+  year={2024}
 }
 ```
 

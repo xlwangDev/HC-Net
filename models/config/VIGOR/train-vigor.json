@@ -1,0 +1,43 @@
+{
+    "gpuid": [0],
+    "mixed_precision": false,
+    "iters_lev0": 6,
+    "lev0": true,
+    "flow": true,
+    "p_siamese": true,
+    "CNN16": true,
+
+    "dataset": "vigor",
+    "orig_label": false,
+    "cross_area": false,
+
+    "batch_size": 5,
+    "lr": 0.00035,
+    "num_steps": 180000,
+    "scheduler": "OneCycle",
+    "loss_w": [0.1, 1.0, 10.0],
+    "temperature": 4.0,
+
+    "augment": false,
+    "ori_noise": 45.0,
+    "orien": true,
+
+    "restore_ckpt": null,
+    "model": null,
+
+    "wdecay": 0.0005,
+    "epsilon": 1e-7,  
+    "clip": 1.0,
+    "gamma": 0.85 ,    
+
+    "name": "HC-Net",
+    "validation": [],
+
+
+    "image_size": 512,
+    "sat_size": 640,
+    "zoom": 20,
+
+    "IMG_FREQ": 20000,
+    "SUM_FREQ": 100
+}

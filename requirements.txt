@@ -7,3 +7,5 @@ opencv-python==4.6.0.66
 torch==1.13.0
 scikit-image==0.18.1
 Pillow==9.4.0
+easydict==1.13
+tensorboard==2.12.1

@@ -1,8 +1,8 @@
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from scipy import interpolate
 from skimage import io
 import random
 import sys
@@ -403,4 +403,107 @@ def draw_markers(img, point, size=10, thickness=2, color=(0, 0, 255), shape=0):
 
     return img
 
+
+SUM_FREQ = 100
+class Logger_train:
+    def __init__(self, args, scheduler, optimizer, need_steps, print_log = True):
+        self.args = args
+        self.scheduler = scheduler
+        self.optimizer = optimizer
+        self.total_steps = 0
+        self.running_loss = {}
+        self.writer = None
+        self.need_steps = need_steps
+        self.print_log = print_log
+
+        import datetime
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%Y%m%d_%H%M%S")  
+
+        self.file_name = "./watch/{}/{}_{}.log".format(args.dataset, args.name, timestamp)
+
+        os.makedirs("./watch/", exist_ok=True)
+        os.makedirs("./watch/{}".format(args.dataset), exist_ok=True)
+
+        print_colored(f"Log will be saved to:{self.file_name}",TextColors.BLUE)
+
+        with open(self.file_name, 'a') as file:
+            file.write(str(args)  + '\n')
+            file.write(self.format_args())
+
+    def _print_training_status(self):
+        metrics_data = [self.running_loss[k]/self.args.SUM_FREQ for k in sorted(self.running_loss.keys())] # ['1px', '3px', 'epe', 'loss']
+        training_str = "[{:6d},{:4d}/{:4d},{:10.7f}] ".format(self.total_steps+1, self.total_steps%self.need_steps+1, self.need_steps, self.optimizer.state_dict()['param_groups'][0]['lr'] ) # optimizer.state_dict()['param_groups'][0]['lr']  self.scheduler.get_last_lr()[0]
+        metrics_str = ("{:6.4f}, "*len(metrics_data)).format(*metrics_data)
+        
+        # print the training status
+        if self.print_log : print(training_str + metrics_str)
+        with open(self.file_name, 'a') as file:
+            file.write(training_str + metrics_str + '\n')
+
+    def push(self, metrics):
+        self.total_steps += 1
+
+        for key in metrics:
+            if key not in self.running_loss:
+                self.running_loss[key] = 0.0
+
+            self.running_loss[key] += metrics[key]
+
+        if self.total_steps % self.args.SUM_FREQ == self.args.SUM_FREQ-1:
+            self._print_training_status()
+            self.running_loss = {}
+
+    def format_args(self):
+        args = self.args
+        params = {
+            'CNN16': args.CNN16,
+            'augment': args.augment,
+            'batch_size': args.batch_size,
+            'cross_area': args.cross_area,
+            'dataset': args.dataset,
+            'flow': args.flow,
+            'iters_lev0': args.iters_lev0,
+            'name': args.name,
+            'num_steps': args.num_steps,
+            'ori_noise': args.ori_noise,
+            'orien': args.orien,
+            'orig_label': args.orig_label,
+            'p_siamese': args.p_siamese,
+            'restore_ckpt': args.restore_ckpt,         
+        }
+        formatted_params = "\n".join(f"{key}: {value}" for key, value in params.items())
+        return formatted_params+'\n'
+
+    def write_dict(self, results):
+        # if self.writer is None:
+        #     self.writer = SummaryWriter()
+        # for key in results:
+        #     self.writer.add_scalar(key, results[key], self.total_steps)
+        pass
+    def write_img(self, img1,img2):
+        # if self.writer is None:
+        #     self.writer = SummaryWriter()
+        # self.writer.add_image('fmap1',get_feature_show(fmap1[0]),self.total_steps,dataformats="HWC")
+        # self.writer.add_image('fmap2',get_feature_show(fmap2[0]),self.total_steps,dataformats="HWC")
+        # self.writer.add_image('fmap1',img1[0]/255.0,self.total_steps,dataformats="CHW")
+        # self.writer.add_image('fmap2',img2[0]/255.0,self.total_steps,dataformats="CHW")
+        pass
+        # self.writer.add_image('ssim',ssim[0],self.total_steps,dataformats="CHW")
+    def close(self):
+        # self.writer.close()
+        pass
+
+
+class TextColors:
+    RED = '31'
+    GREEN = '32'
+    YELLOW = '33'
+    BLUE = '34'
+    MAGENTA = '35'
+    CYAN = '36'
+    WHITE = '37'
+
+def print_colored(text, color=TextColors.RED):
+    print(f"\033[{color}m{text}\033[0m")
 
